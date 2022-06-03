@@ -5,6 +5,8 @@ from .layer import Layer
 
 class Network:
     def __init__(self, n_inputs, n_hidden, n_outputs, hidden=None) -> None:
+        if(any(param < 0 for param in [n_inputs, n_hidden, n_outputs])):
+            raise Exception("All parameters have to positive!")
         self.__n_inputs = n_inputs
         # Construct the network
         self.__network = []
@@ -25,14 +27,18 @@ class Network:
             self.__network[0].layer[neuron_number].forward_prop(X_current[neuron_number])
             X_current[neuron_number] = self.__network[0].layer[neuron_number].A
         
-        for layer_number, layer in self.__network[1:]:
-            
-            pass
-
+        for layer_number in range(len(self.__network[1:])):
+            if(layer_number == 0):
+                continue
+            X_new = []
+            for neuron_number in range(len(self.__network[layer_number].layer)):
+                self.__network[layer_number].layer[neuron_number].forward_prop(X_current)
+                X_new.append(self.__network[layer_number].layer[neuron_number].A)
+            X_current = np.array(X_new)
         self.pprint()
         
     def pprint(self):
         for layer_number, layer in enumerate(self.__network):
             print(f"Layer number: {layer_number + 1} Number of nodes: {layer.nodes}")
             for neuron_number, neuron in enumerate(layer.layer):
-                print(f"Neuron number:{neuron_number + 1} Activation: {neuron.A}")
+                print(f"Neuron number:{neuron_number + 1} Activation: {neuron.A} Weights: {neuron.W} Bias: {neuron.b}")

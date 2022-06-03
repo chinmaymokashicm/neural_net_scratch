@@ -13,5 +13,5 @@ layer = Layer(nodes_previous_layer=3, nodes=5)
 layer.layer[0].forward_prop(X)
 # print(layer.layer[0].A)
 
-network = Network(n_inputs=5, n_hidden=3, n_outputs=4, hidden=[2, 3, 2])
-network.forward_prop([1, 2, 3, 4, 5])
+network = Network(n_inputs=3, n_hidden=3, n_outputs=10, hidden=[2, 3, 8])
+network.forward_prop([1, 2, 3])
