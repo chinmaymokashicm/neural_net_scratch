@@ -9,6 +9,7 @@ class Neuron:
         """
         if(n_previous_layers is not None):
             self.__W = np.random.normal(0, 1, n_previous_layers)
+            self.__W = np.arange(0, n_previous_layers*10, 10)
             self.__b = -2
             self.__A = 0
         else: # If the neuron is in the first layer
